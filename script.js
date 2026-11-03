@@ -646,7 +646,25 @@ async function ageUp() {
 
   busy = false;
   $('age-btn').disabled = !!S.over;
-  if (S.over) setTimeout(showEnd, 1300);
+  if (S.over) {
+    setAuto(false);
+    setTimeout(showEnd, 1300);
+  } else if (auto) {
+    autoTimer = setTimeout(ageUp, 900);
+  }
+}
+
+let auto = false;
+let autoTimer = null;
+
+function setAuto(on) {
+  auto = on && !S.over;
+  clearTimeout(autoTimer);
+  const b = $('auto-btn');
+  b.innerHTML = auto ? '&#10074;&#10074; STOP' : '&#9654; AUTO';
+  b.setAttribute('aria-pressed', auto);
+  b.classList.toggle('on', auto);
+  if (auto && !busy) ageUp();
 }
 
 function hearts() {
@@ -911,6 +929,7 @@ function chooseFounder(i) {
 }
 
 function newGame() {
+  if (S) setAuto(false);
   closeModal();
   $('tree').hidden = true;
   $('game').hidden = true;
@@ -932,7 +951,9 @@ function start() {
 /* ---------- Wiring ---------- */
 
 $('age-btn').addEventListener('click', ageUp);
+$('auto-btn').addEventListener('click', () => setAuto(!auto));
 $('retire-btn').addEventListener('click', () => {
+  setAuto(false);
   if (busy) return;
   if (!S.over && !confirm('End this family here and see the whole tree?')) return;
   if (!S.over) { S.over = { year: S.year, why: 'You closed the book on this family.' }; save(); }
