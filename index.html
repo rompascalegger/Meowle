@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=VT323&family=Press+Start+2P&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=2.1.0">
+  <link rel="stylesheet" href="style.css?v=3.0.1">
 </head>
 <body>
   <div class="scanlines" aria-hidden="true"></div>
@@ -21,6 +21,9 @@
       <p>A FAMILY OF CATS</p>
     </div>
     <div class="top-buttons">
+      <button id="fish" class="px-btn fish-badge" type="button" title="Fish: spend them in the shop"><span>&#128031;</span> <b id="fish-val">0</b></button>
+      <button id="shop-btn" class="px-btn icon-btn" type="button" title="Shop" aria-label="Shop">&#128722;</button>
+      <button id="dex-btn" class="px-btn icon-btn" type="button" title="Catdex" aria-label="Catdex">&#128214;</button>
       <button id="tree-btn" class="px-btn icon-btn" type="button" title="Family tree" aria-label="Family tree">&#127795;</button>
       <button id="log-btn" class="px-btn icon-btn" type="button" title="Chronicle" aria-label="Chronicle">&#128220;</button>
       <button id="help-btn" class="px-btn icon-btn" type="button" title="How to play" aria-label="How to play">?</button>
@@ -31,12 +34,16 @@
   <main id="game" class="game" hidden>
     <section id="stats" class="stats panel" aria-live="polite"></section>
 
+    <div class="colony-head"><h2>&#128203; ORDERS</h2><span class="dim small">adopt cats out for fish &amp; legacy</span></div>
+    <section id="orders" class="orders"></section>
+
     <div class="colony-head">
       <h2>THE COLONY</h2>
       <label class="sort">sort
         <select id="sort">
           <option value="dna">origin DNA</option>
           <option value="age">age</option>
+          <option value="rarity">rarity</option>
           <option value="gen">generation</option>
         </select>
       </label>
@@ -66,7 +73,10 @@
       <div id="founders" class="founders"></div>
       <div class="splash-actions">
         <button id="reroll-btn" class="px-btn" type="button">&#127922; OTHER CATS</button>
+        <button id="splash-shop" class="px-btn" type="button">&#128722; SHOP</button>
+        <button id="splash-dex" class="px-btn" type="button">&#128214; CATDEX</button>
       </div>
+      <p id="meta-line" class="meta-line"></p>
     </div>
   </div>
 
@@ -76,6 +86,27 @@
       <div class="yearfx-label">YEAR</div>
       <div class="flip"><span id="yf-old" class="flip-old"></span><span id="yf-new" class="flip-new"></span></div>
       <div id="months" class="months"></div>
+      <div id="yf-legacy" class="yf-legacy"></div>
+    </div>
+  </div>
+
+  <!-- Kitten reveal: the purr meter -->
+  <div id="reveal" class="overlay reveal" hidden>
+    <div class="panel reveal-box">
+      <div class="rv-top"><span class="rv-title">NEW LITTER!</span><span id="rv-count" class="rv-count"></span></div>
+      <div id="rv-parents" class="rv-parents"></div>
+      <div id="rv-stage" class="rv-stage">
+        <div class="basket" aria-hidden="true"></div>
+        <img id="rv-cat" alt="" hidden>
+        <div id="rv-grade" class="rv-grade"></div>
+      </div>
+      <div id="rv-info" class="rv-info"></div>
+      <div id="rv-meter" class="meter">
+        <div id="rv-zone" class="zone"><i class="great"></i><i class="perfect"></i></div>
+        <div id="rv-cursor" class="cursor">&#128062;</div>
+      </div>
+      <div class="rv-hint">TAP or SPACE when the paw is in the gold</div>
+      <div class="rv-foot"><span id="rv-combo" class="rv-combo"></span><button id="rv-skip" class="px-btn small-btn" type="button">SKIP ALL</button></div>
     </div>
   </div>
 
@@ -97,6 +128,7 @@
       <span><i class="lg gold"></i> carries origin DNA</span>
       <span><i class="lg none"></i> no origin DNA</span>
       <span>&#10013; died</span>
+      <span>&#127969; adopted</span>
       <span>&#128081; founder</span>
     </div>
   </div>
@@ -111,6 +143,6 @@
 
   <div id="toasts" class="toasts" aria-live="polite"></div>
 
-  <script src="script.js?v=2.1.0"></script>
+  <script src="script.js?v=3.0.1"></script>
 </body>
 </html>
